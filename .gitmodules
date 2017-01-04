@@ -1,3 +1,6 @@
 [submodule "services/gateway"]
 	path = services/gateway
 	url = git@github.com:tbparrish/gateway.git
+[submodule "services/vehicle-location-service"]
+	path = services/vehicle-location-service
+	url = git@github.com:tbparrish/vehicle-location-service.git
