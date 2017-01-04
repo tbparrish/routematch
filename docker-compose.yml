@@ -1,0 +1,48 @@
+version: '2'
+
+services:
+  routematch-db:
+    image: mongo
+    hostname: routematch-db
+    container_name: routematch-db
+    volumes_from:
+      - mongodata
+    ports:
+      - "27017:27017"
+    command: --smallfiles
+
+  mongodata:
+    image: tianon/true
+    volumes:
+      - /data/db
+
+  routematch-msgqueue:
+    image: rabbitmq:management
+    hostname: routematch-msgqueue
+    container_name: routematch-msgqueue
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    expose:
+      - "5672"
+
+  base-node:
+    build: ./base-images/node
+    image: routematch/node
+    entrypoint: /bin/echo
+    command: "hello"
+
+  routematch-gateway:
+    build: ./base-images/node
+    container_name: routematch-gateway
+    ports:
+      - "8082:8082"
+    volumes:
+      - ./services/gateway:/work
+
+  vehicle-location-service:
+    build: ./base-images/node
+    container_name: vehicle-location-service
+    volumes:
+      - ./services/vehicle-location-service:/work
+
