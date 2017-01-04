@@ -1,0 +1,3 @@
+[submodule "services/gateway"]
+	path = services/gateway
+	url = git@github.com:tbparrish/gateway.git
